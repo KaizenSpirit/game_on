@@ -2,6 +2,7 @@
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
+const modalEnd = document.querySelector('.bg-modal-end')
 
 //burger button nav
 document.querySelector(".icon").addEventListener('click',editNav)
@@ -24,6 +25,15 @@ function launchModal() {
 // close modal form
 document.querySelector(".close").addEventListener('click',function(){
   modalbg.style.display = "none";
+})
+
+
+document.querySelector('.terminal').addEventListener('click',function(){
+  modalEnd.style.display = "none"
+})
+
+document.querySelector('.btn-close').addEventListener('click',function(){
+  modalEnd.style.display = "none"
 })
 
 
@@ -162,6 +172,11 @@ document.getElementById('quantity').addEventListener('blur',verifyNumberTourname
 
 document.querySelector('form').addEventListener('submit',validateForm)
 
+
+function displayModalEnd(){
+  modalEnd.style.display = "block";
+  modalbg.style.display = "none"
+}
 function validateForm(e) {
   let firstNameValid = validateFirstName();
   let lastNameValid = validateLastName();
@@ -181,6 +196,12 @@ function validateForm(e) {
   ) {
     e.preventDefault()
     return false;
+  }else{
+    displayModalEnd()
+    e.preventDefault()
+    
   }
   return true;
+  
 }
+

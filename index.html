@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Reservation</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="/assets/css/modal.css" />
+    <link rel="stylesheet" href="assets/css/modal.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link
       href="https://fonts.googleapis.com/css?family=DM+Sans"
@@ -14,7 +14,7 @@
   <body>
     <div class="topnav" id="myTopnav">
       <div class="header-logo">
-      <img alt="logo" src="/assets/img/Logo.png" width="auto" height="auto" />
+      <img alt="logo" src="assets/img/Logo.png" width="auto" height="auto" />
     </div>
     <div class="main-navbar">
       
@@ -45,7 +45,7 @@
           </button>
         </div>
         <div class="hero-img">
-          <img src="/assets/img/bg_img.jpg" alt="img" />
+          <img src="assets/img/bg_img.jpg" alt="img" />
         </div>
         <button class="btn-signup modal-btn">
           je m'inscris
@@ -69,7 +69,7 @@
                   id="first"
                   name="first"
                   minlength="2"
-                /><span class="span-modal" id="firstNameError"></span><br>
+                /><br>
               </div>
               <div
                 class="formData">
@@ -79,7 +79,7 @@
                   type="text"
                   id="last"
                   name="last"
-                /><span class="span-modal" id="lastNameError"></span><br>
+                /><br>
               </div>
               <div
                 class="formData">
@@ -89,18 +89,17 @@
                   type="email"
                   id="email"
                   name="email"
-                /><span class="span-modal" id="emailError"></span><br>
+                /><br>
               </div>
               <div
                 class="formData">
-                <label for="birthDate">Date de naissance</label><br>
+                <br>
                 <input
                   class="text-control"
                   type="date"
                   id="birthdate"
                   name="birthdate"
                 /><br>
-                <span class="span-modal" id="birthDateError"></span>
               </div>
               <div
                 class="formData">
@@ -179,7 +178,6 @@
                 >
               </div>
               <span  id="validation-message"></span>
-              <span class="span-modal" id="button-radio-error"></span>
 
               <div class="formData">
                 <input class="checkbox-input" type="checkbox" id="checkbox1"/>
@@ -194,7 +192,6 @@
                   Je souhaite être prévenu des prochains évènements.
                 </label>
                 <br>
-                <span class="span-modal" id="checkbox-error"></span>
               </div>
               <input
                 class="btn-submit"
@@ -206,13 +203,29 @@
           </div>
         </div>
       </div>
-      
+      <div class="bg-modal-end">
+        <div class="modal-end">
+          <span class="close terminal"></span>
+          <div class="modal-end-content">
+            <p>
+              Merci pour
+              <br>
+              votre inscription
+            </p>
+            <input
+                class="btn-close"
+                class="button"
+                value="Fermer"
+              />
+          </div>
+        </div>
+      </div>
     </main>
     <footer>
       <p class="copyrights">
         Copyright 2014 - 2022, GameOn Inc.
       </p>
     </footer>
-    <script src="/assets/js/modal.js"></script>
+    <script src="assets/js/modal.js"></script>
   </body>
 </html>
