@@ -172,11 +172,6 @@ document.getElementById('quantity').addEventListener('blur',verifyNumberTourname
 
 document.querySelector('form').addEventListener('submit',validateForm)
 
-
-function displayModalEnd(){
-  modalEnd.style.display = "block";
-  modalbg.style.display = "none"
-}
 function validateForm(e) {
   let firstNameValid = validateFirstName();
   let lastNameValid = validateLastName();
@@ -205,3 +200,7 @@ function validateForm(e) {
   
 }
 
+function displayModalEnd(){
+  modalEnd.style.display = "block";
+  modalbg.style.display = "none"
+}
