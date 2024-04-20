@@ -119,9 +119,9 @@ input {
   border: 2px solid #e54858;
 }
 
-.formData[data-success-visible="true"] .text-control {
+/* .formData[data-success-visible="true"] .text-control {
   border: 2px solid greenyellow;
-}
+} */
 /* input[data-error]::after {
     content: attr(data-error);
     font-size: 0.4em;

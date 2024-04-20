@@ -51,8 +51,8 @@ function validateFirstName(){
     errorDisplay(firstNameInput, "Veuillez entrer un prénom valide."); 
     return false;
   } else {
-    errorDisplay(firstNameInput, "")
-    firstNameInput.parentElement.setAttribute('data-success-visible', 'true');
+    errorDisplay(firstNameInput, "") 
+    firstNameInput.parentElement.removeAttribute('data-error-visible', 'true');
     return firstNameInput.value; 
   }
 }
@@ -63,7 +63,7 @@ function validateLastName(){
     return false; 
   } else {
     errorDisplay(lastNameInput, "")
-    lastNameInput.parentElement.setAttribute('data-success-visible', 'true');
+    lastNameInput.parentElement.removeAttribute('data-error-visible', 'true');
     return lastNameInput.value; 
   }
 }
@@ -74,7 +74,7 @@ function validateEmail(){
     return false;
   }else{
     errorDisplay(email, "")
-    email.parentElement.setAttribute('data-success-visible', 'true');
+    email.parentElement.removeAttribute('data-error-visible', 'true');
     return email.value
   }
 }
@@ -92,7 +92,7 @@ function validateBirthDate(){
       return false;
     } else {
       errorDisplay(birthDateInput, "")
-      birthDateInput.parentElement.setAttribute('data-success-visible', 'true');
+      birthDateInput.parentElement.removeAttribute('data-error-visible', 'true');
       return birthDateInput.value
     }
   }
@@ -106,7 +106,7 @@ const num = parseInt(quantityTournament.value);
     return false;
   }else
   errorDisplay(quantityTournament, "")
-  quantityTournament.parentElement.setAttribute('data-success-visible', 'true');
+  quantityTournament.parentElement.removeAttribute('data-error-visible', 'true');
   return quantityTournament.value
 }
 
@@ -172,14 +172,14 @@ function validateForm(e) {
     e.preventDefault()
     return false;
   }else{
-    displayModalEnd()
+    displayModalEnd()  
     e.preventDefault()
     const formData = {
       firstName: firstNameInput.value,
       lastName: lastNameInput.value,
       email: email.value,
       birthDate: birthDateInput.value,
-      quantityTournament: quantityTournamentValid,
+      quantityTournament: verifyNumberTournament(),
       location: getSelectedRadioValue(radioButtons)
     };
     console.log(formData);
