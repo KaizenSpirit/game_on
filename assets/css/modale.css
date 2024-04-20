@@ -237,3 +237,15 @@ input {
   font-weight: normal;
   font-size: 16px;
 }
+
+
+@media screen and (max-width: 800px) {
+  .bground{
+    background-color: white;
+  }
+  .content {
+    margin: 16% auto;
+  }
+}
+
+

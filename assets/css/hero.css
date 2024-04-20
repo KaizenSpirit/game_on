@@ -52,9 +52,11 @@
   margin-top: 90px;
 }
 .hero-img {
+  position: relative;
   grid-column: span 8;
 }
 .hero-img img {
+  position: relative;
   width: 100%;
   height: 100%;
   display: block;
@@ -110,15 +112,23 @@
   .hero-section {
     display: block;
     box-shadow: unset;
+    height: 40%;
+    width: 100%;
   }
   .hero-content {
     background: #fff;
     color: #000;
-    padding: 20px;
+    padding: 0;
+    width: 87vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
   }
   .hero-content h1{
     font-size: 40px;
-    font-weight: 500;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 0;
   }
   .hero-content::after {
     content: unset;
@@ -131,21 +141,31 @@
     white-space: normal;
   }
   .hero-text {
-    width: 100%;
+    width: 90%;
     font-size: 13px;
+    font-weight: 400;
+    margin-top: 20px;
   }
   .hero-img img {
+    position: relative;
     border-radius: 10px;
     margin-top: 40px;
+    width: 100%;
+    height: 30%;
   }
   .hero-section > .btn-signup {
+    margin:30px auto;
     display: block;
-    margin: 32px auto 10px;
-    padding: 12px 35px;
+    padding: 10px 35px;
+    border-radius: 10px;
+    font-size: 14px;
+    letter-spacing: 1px;
   }
   .copyrights {
-    margin-top: 50px;
+    margin-top: -20px;
     text-align: center;
+    font-size: 10px;
+    line-height: 12px;
   }
 }
 

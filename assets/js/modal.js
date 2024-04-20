@@ -199,7 +199,6 @@ function validateForm(e) {
   return true;
   
 }
-
 function displayModalEnd(){
   modalEnd.style.display = "block";
   modalbg.style.display = "none"

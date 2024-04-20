@@ -73,3 +73,14 @@ text-align: center;
   display: flex;
   flex-direction: column-reverse;
 }
+
+
+@media screen and (max-width: 800px) {
+  .bground{
+    background-color: white;
+  }
+  
+  .modal-end {
+  margin: 16% auto;
+  }
+}
