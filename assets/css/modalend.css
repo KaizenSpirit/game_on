@@ -74,13 +74,20 @@ text-align: center;
   flex-direction: column-reverse;
 }
 
-
 @media screen and (max-width: 800px) {
-  .bground{
-    background-color: white;
+  .bg-modal-end{
+    background-color: transparent;    
+    margin: 14% auto;
   }
-  
-  .modal-end {
-  margin: 16% auto;
+  .modal-end-content p{
+    position: absolute;
+    font-size: 100%;
+    top: 39%;
+    left: 30%;
+    }
+  .bg-modal-end input{
+    position: absolute;
+    top: -4%;
+    left: 30%;
   }
 }

@@ -4,29 +4,33 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const modalEnd = document.querySelector('.bg-modal-end')
 
-//burger button nav
+const firstNameInput = document.getElementById('first');
+const lastNameInput = document.getElementById('last');
+const email = document.getElementById('email');
+const birthDateInput = document.getElementById('birthdate');
+const radioButtons = document.querySelectorAll('input[type="radio"][name="location"]');
+let isRadioSelected = false;
+
 document.querySelector(".icon").addEventListener('click',editNav)
 
 function editNav() {
-  let x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
+  let burgerButton = document.getElementById("myTopnav");
+  if (burgerButton.className === "topnav") {
+    burgerButton.className += " responsive";
   } else {
-    x.className = "topnav";
+    burgerButton.className = "topnav";
   }
 }
 
-// launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-// launch modal form
+
 function launchModal() {
   modalbg.style.display = "block";
 }
-// close modal form
+
 document.querySelector(".close").addEventListener('click',function(){
   modalbg.style.display = "none";
 })
-
 
 document.querySelector('.terminal').addEventListener('click',function(){
   modalEnd.style.display = "none"
@@ -36,23 +40,11 @@ document.querySelector('.btn-close').addEventListener('click',function(){
   modalEnd.style.display = "none"
 })
 
-
-const firstNameInput = document.getElementById('first');
-const lastNameInput = document.getElementById('last');
-const email = document.getElementById('email');
-const birthDateInput = document.getElementById('birthdate');
-const radioButtons = document.querySelectorAll('input[type="radio"][name="location"]');
-let isRadioSelected = false;
-
-
-// setting function to display error message from css caracteristics .formData[data-error]::after
 function errorDisplay(inputField, errorMessage) {
   const formData = inputField.parentElement;
   formData.setAttribute("data-error", errorMessage); 
   formData.setAttribute("data-error-visible", "true"); 
 }
-
-
 
 function validateFirstName(){
   if (firstNameInput.value.trim().length < 2) {
@@ -76,7 +68,6 @@ function validateLastName(){
   }
 }
 
-
 function validateEmail(){
   if(email.value.length === 0){
     errorDisplay(email, "Veuillez entrer une adresse mail valide."); 
@@ -87,7 +78,6 @@ function validateEmail(){
     return email.value
   }
 }
-
 
 function validateBirthDate(){
   if (birthDateInput.value === '') {
@@ -109,7 +99,6 @@ function validateBirthDate(){
 }
 
 function verifyNumberTournament() {
-  // quantity
 const quantityTournament = document.getElementById('quantity');
 const num = parseInt(quantityTournament.value);
   if (isNaN(num)) {
@@ -138,28 +127,21 @@ function verifyRadio() {
       return true; 
     }
   }
-
   errorDisplay(radioButtons[0], "Veuillez sélectionner un emplacement"); 
   return false;
 }
 
-
 function formIsValid() {
   const checkbox1 = document.getElementById('checkbox1');
-
-  // Add event listener to checkbox
   checkbox1.addEventListener('click', () => {
     if (checkbox1.checked) {
-      errorDisplay(checkbox1, ""); // Hide error message
+      errorDisplay(checkbox1, "");
     }
   });
-
-  // Check checkbox state and display error if unchecked
   if (!checkbox1.checked) {
     errorDisplay(checkbox1, "Veuillez accepter nos conditions d'utilisation.");
     return false;
   }
-
   return true;
 }
 document.getElementById('first').addEventListener('blur', validateFirstName);
@@ -167,8 +149,6 @@ document.getElementById('last').addEventListener('blur',validateLastName)
 document.getElementById('email').addEventListener('blur',validateEmail)
 document.getElementById('birthdate').addEventListener('blur',validateBirthDate)
 document.getElementById('quantity').addEventListener('blur',verifyNumberTournament)
-
-
 
 document.querySelector('form').addEventListener('submit',validateForm)
 
@@ -194,12 +174,37 @@ function validateForm(e) {
   }else{
     displayModalEnd()
     e.preventDefault()
-    
+    const formData = {
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      email: email.value,
+      birthDate: birthDateInput.value,
+      quantityTournament: quantityTournamentValid,
+      location: getSelectedRadioValue(radioButtons)
+    };
+    console.log(formData);
+
+const formFields = document.querySelectorAll('.formData input, .formData textarea');
+for (const field of formFields) {
+  field.value = '';
+  if (field.type === 'checkbox' || field.type === 'radio') {
+    field.checked = false;
+    }
   }
-  return true;
-  
 }
+  return true;
+}
+
 function displayModalEnd(){
   modalEnd.style.display = "block";
   modalbg.style.display = "none"
+}
+
+function getSelectedRadioValue(radioButtons) {
+  for (const radioButton of radioButtons) {
+    if (radioButton.checked) {
+      return radioButton.value;
+    }
+  }
+  return ""; 
 }

@@ -241,7 +241,7 @@ input {
 
 @media screen and (max-width: 800px) {
   .bground{
-    background-color: white;
+    background-color: transparent;
   }
   .content {
     margin: 16% auto;
