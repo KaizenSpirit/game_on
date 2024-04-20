@@ -46,36 +46,72 @@ function errorDisplay(inputField, errorMessage) {
   formData.setAttribute("data-error-visible", "true"); 
 }
 
-function validateFirstName(){
-  if (firstNameInput.value.trim().length < 2) {
-    errorDisplay(firstNameInput, "Veuillez entrer un prénom valide."); 
+// function validateFirstName() {
+//   const firstNameRegex = /^[a-zA-Z0-9]{2,}$/; 
+//   if (!firstNameRegex.test(firstNameInput.value)) {
+//     errorDisplay(firstNameInput, "Le prénom n'est pas valide.");
+//     return false;
+//   } else {
+//     errorDisplay(firstNameInput, "");
+//     firstNameInput.parentElement.removeAttribute('data-error-visible', 'true');
+//     return firstNameInput.value;
+//   }
+// }
+
+// function validateLastName(){
+//   const lastNameRegex = /^[a-zA-Z0-9]{2,}$/; 
+//   if (!lastNameRegex.test(lastNameInput.value)) {
+//     errorDisplay(lastNameInput, "Le prénom n'est pas valide.");
+//     return false;
+//   } else {
+//     errorDisplay(lastNameInput, "");
+//     lastNameInput.parentElement.removeAttribute('data-error-visible', 'true');
+//     return lastNameInput.value;
+//   }
+//   }
+
+// function validateEmail(){
+//   if(email.value.length === 0){
+//     errorDisplay(email, "Veuillez entrer une adresse mail valide."); 
+//     return false;
+//   }else{
+//     errorDisplay(email, "")
+//     email.parentElement.removeAttribute('data-error-visible', 'true');
+//     return email.value
+//   }
+// }
+
+function handleValidation(inputElement, regex, errorMessage) {
+  const formData = inputElement.parentElement;
+
+  if (!regex.test(inputElement.value)) {
+    formData.setAttribute("data-error", errorMessage);
+    formData.setAttribute("data-error-visible", "true");
     return false;
   } else {
-    errorDisplay(firstNameInput, "") 
-    firstNameInput.parentElement.removeAttribute('data-error-visible', 'true');
-    return firstNameInput.value; 
+    formData.removeAttribute("data-error");
+    formData.removeAttribute("data-error-visible");
+    return inputElement.value;
   }
 }
 
-function validateLastName(){
-  if (lastNameInput.value.trim().length < 2) {
-    errorDisplay(lastNameInput, "Veuillez entrer un nom valide."); 
-    return false; 
-  } else {
-    errorDisplay(lastNameInput, "")
-    lastNameInput.parentElement.removeAttribute('data-error-visible', 'true');
-    return lastNameInput.value; 
-  }
+function validateFirstName() {
+  const firstNameRegex = /^[a-zA-Z0-9-]{2,}$/;
+  return handleValidation(firstNameInput, firstNameRegex, "Le prénom n'est pas valide.");
 }
 
-function validateEmail(){
-  if(email.value.length === 0){
-    errorDisplay(email, "Veuillez entrer une adresse mail valide."); 
+function validateLastName() {
+  const lastNameRegex = /^[a-zA-Z0-9-]{2,}$/;
+  return handleValidation(lastNameInput, lastNameRegex, "Le nom n'est pas valide.");
+}
+
+function validateEmail() {
+  const emailRegex = /^[\w-.]+@[\w-.]+\.[a-zA-Z]{2,}$/;
+  if (email.value.length === 0) {
+    errorDisplay(email, "Veuillez entrer une adresse mail valide.");
     return false;
-  }else{
-    errorDisplay(email, "")
-    email.parentElement.removeAttribute('data-error-visible', 'true');
-    return email.value
+  } else {
+    return handleValidation(email, emailRegex, "Adresse email invalide.");
   }
 }
 
@@ -118,7 +154,7 @@ function verifyRadio() {
       if (radioButton.checked) {
         errorDisplay(radioButtons[0], ""); 
         isRadioSelected = true; 
-        return true; 
+        return radioButton.value; 
       }
     });
 
