@@ -75,15 +75,20 @@ text-align: center;
 }
 
 @media screen and (max-width: 800px) {
+
+  .modal-end {
+    height: 93vh;
+    width: 100.5%;
+  }
   .bg-modal-end{
     background-color: transparent;    
     margin: 14% auto;
   }
   .modal-end-content p{
     position: absolute;
-    font-size: 100%;
-    top: 39%;
-    left: 30%;
+    font-size: 33px;
+    top: 37%;
+    left: 27%;
     }
   .bg-modal-end input{
     position: absolute;

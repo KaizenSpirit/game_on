@@ -1,11 +1,5 @@
-main {
-  font-size: 130%;
-  font-weight: bolder;
-  color: black;
-  padding-top: 0.5vw;
-  padding-left: 2vw;
-  padding-right: 2vw;
-  margin: 1px 20px 15px;
-  border-radius: 2rem;
-  text-align: justify;
-}
+@import url('general.css');
+@import url('hero.css');
+@import url('modale.css');
+@import url('modalend.css');
+@import url('nav.css');

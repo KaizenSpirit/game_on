@@ -167,7 +167,7 @@ function verifyRadio() {
   return false;
 }
 
-function formIsValid() {
+function boxIsValid() {
   const checkbox1 = document.getElementById('checkbox1');
   checkbox1.addEventListener('click', () => {
     if (checkbox1.checked) {
@@ -195,15 +195,15 @@ function validateForm(e) {
   let birthDateValid = validateBirthDate()
   let quantityTournamentValid = verifyNumberTournament()
   let radioButtonSelected = verifyRadio()
-  let formIsValidated = formIsValid()
+  let boxIsValidated = boxIsValid()
   if (
-    !validateFirstName() 
-||  !validateLastName()
-||  !validateEmail()
-||  !validateBirthDate()
-||  !verifyNumberTournament()
-||  !verifyRadio()
-||  !formIsValid()
+    !validateFirstName() ||  
+    !validateLastName()  ||  
+    !validateEmail()     ||  
+    !validateBirthDate() ||  
+    !verifyNumberTournament() ||  
+    !verifyRadio()       ||  
+    !boxIsValid()
   ) {
     e.preventDefault()
     return false;
@@ -218,8 +218,10 @@ function validateForm(e) {
       quantityTournament: verifyNumberTournament(),
       location: getSelectedRadioValue(radioButtons)
     };
-    console.log(formData);
 
+    console.log(formData);
+    localStorage.setItem('formData', JSON.stringify(formData));
+    
 const formFields = document.querySelectorAll('.formData input, .formData textarea');
 for (const field of formFields) {
   field.value = '';
