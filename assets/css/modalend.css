@@ -77,22 +77,19 @@ text-align: center;
 @media screen and (max-width: 800px) {
 
   .modal-end {
-    height: 93vh;
+    height: 93%;
     width: 100.5%;
   }
   .bg-modal-end{
     background-color: transparent;    
     margin: 14% auto;
   }
-  .modal-end-content p{
-    position: absolute;
-    font-size: 33px;
-    top: 37%;
-    left: 27%;
-    }
+  .modal-end-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .bg-modal-end input{
-    position: absolute;
-    top: -4%;
-    left: 30%;
+    margin-top: 140%;
   }
 }

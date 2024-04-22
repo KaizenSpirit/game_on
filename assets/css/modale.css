@@ -232,6 +232,11 @@ input {
   margin-top: 18px;
 }
 
+.modal-btn{
+  margin: 90px 0 0 0;
+  padding: 15px 29px;
+  font-size: 25px;
+}
 /* custom select end */
 .text-label {
   font-weight: normal;
