@@ -176,13 +176,12 @@ main {
     letter-spacing: 1px;
   }
   .copyrights {
-    margin-top: -20px;
+    margin: -20px 0 0 10px;
     text-align: center;
-    font-size: 10px;
+    font-size: 0.8rem;
     line-height: 12px;
   }
 }
-
 
 footer {
   padding-left: 2vw;
