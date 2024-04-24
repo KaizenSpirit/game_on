@@ -10,101 +10,75 @@ const email = document.getElementById('email'); // Sélection de l'élément ave
 const birthDateInput = document.getElementById('birthdate'); // Sélection de l'élément avec l'id "birthdate" (champ Date de naissance)
 const radioButtons = document.querySelectorAll('input[type="radio"][name="location"]'); // Sélection de tous les boutons radio avec le nom "location"
 let isRadioSelected = false; // Variable pour suivre la sélection d'un bouton radio (initialisée à faux)
+const quantityTournament = document.getElementById('quantity');
 
-// Écouteur d'événement sur les boutons d'ouverture de la modale 1 pour chaque format : desktop et mobile
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-// Fonction de lancement de la fenêtre modale
+
 function launchModal() {
-  // Afficher l'arrière-plan de la fenêtre modale
   modalbg.style.display = "block";
 }
 
-// Écouteur d'événement sur la croix de fermeture de la fenêtre modale principale
 document.querySelector(".close").addEventListener('click',function(){
-  // Cacher l'arrière-plan de la modale principale
   modalbg.style.display = "none";
 })
 
-// Écouteur d'événement sur le bouton rouge de fermeture de la fenêtre modale de fin d'inscription
 document.querySelector('.terminal').addEventListener('click',function(){
-  // Cacher la modale de fin d'inscription
   modalEnd.style.display = "none"
 })
 
-// Écouteur d'événement sur la croix de fermeture de la fenêtre modale de fin d'inscription
 document.querySelector('.btn-close').addEventListener('click',function(){
-  // Cacher la modale de fin d'inscription
   modalEnd.style.display = "none"
 })
 
 document.querySelector(".icon").addEventListener('click',editNav)
 
 function editNav() {
-  // Obtenir une référence à l'élément avec l'ID "myTopnav"
   let burgerButton = document.getElementById("myTopnav");
-  // Vérifier le nom de classe actuel de l'élément
   if (burgerButton.className === "topnav") {
-    // Si le nom de classe est juste "topnav", ajouter "responsive" 
-    //à celui-ci pour déployer la navigation en format mobile
     burgerButton.className += " responsive";
   } else {
-    // Si le nom de classe est autre chose, en l'occurence "responsive" 
-    //le remettre à "topnav" pour que la nav disparaisse
     burgerButton.className = "topnav";
   }
-}
-
-// Fonction pour gérer la validation d'un champ de formulaire
-function handleValidation(inputElement, regex, errorMessage) { // arguments passés à l'aides des fonctions de validation suivantes
-  // Récupère l'élément parent du champ de formulaire
-  const inputsData = inputElement.parentElement;
-
-  // Vérifie si la valeur du champ correspond à l'expression régulière
-  if (!regex.test(inputElement.value)) {
-    // Ajoute des attributs data pour indiquer une erreur
-    inputsData.setAttribute("data-error", errorMessage);
-    inputsData.setAttribute("data-error-visible", "true");
-    // Renvoie faux si la validation échoue
-    return false;
-  } else {
-    // Supprime les attributs data d'erreur si la validation réussit
-    inputsData.removeAttribute("data-error");
-    inputsData.removeAttribute("data-error-visible");
-    // Renvoie la valeur du champ si la validation réussit
-    return inputElement.value;
-  }
-}
-
-// Fonction pour valider le prénom
-function validateFirstName() {
-  // Expression régulière pour le prénom (minimum 2 caractères et maximum 15 caractères)
-  const firstNameRegex = /^[a-zA-Z0-9-]{2,15}$/;
-  // Utilise la fonction handleValidation pour la vérification
-  return handleValidation(firstNameInput, firstNameRegex, "L'adresse mail n'est pas valide.");
-}
-
-// Fonction pour valider le nom
-function validateLastName() {
-  // Expression régulière pour le nom (minimum 2 caractères et maximum 15 caractères)
-  const lastNameRegex = /^[a-zA-Z0-9-]{2,15}$/;
-  // Utilise la fonction handleValidation pour la vérification
-  return handleValidation(lastNameInput, lastNameRegex, "L'adresse mail n'est pas valide.");
-}
-
-// Fonction pour valider l'adresse email
-function validateEmail() {
-  // Expression régulière pour l'adresse email
-  const emailRegex = /^[\w-.]+@[\w-.]+\.[a-zA-Z]{2,}$/;
-    return handleValidation(email, emailRegex, "Adresse email invalide.");
 }
 
 function errorDisplay(inputField, errorMessage) {
   const formData = inputField.parentElement;
   formData.setAttribute("data-error", errorMessage); 
+  if(errorMessage){
   formData.setAttribute("data-error-visible", "true"); 
+  }else{
+    formData.removeAttribute('data-error-visible', 'true');
+  }
 }
 
-function validateBirthDate(){
+function validateInput(inputElement, regex, errorMessage) {
+  if (!regex.test(inputElement.value)) {
+    errorDisplay(inputElement, errorMessage);
+    return false;
+  }
+  errorDisplay(inputElement, ""); 
+  return true;
+}
+
+
+const validateFirstName = validateInput.bind(null, firstNameInput, /^[a-zA-Z0-9-]{2,15}$/, "Veuillez entrer un prénom compris entre 2 et 15 caractères");
+const validateLastName = validateInput.bind(null, lastNameInput, /^[a-zA-Z0-9-]{2,15}$/, "Veuillez entrer un nom compris entre 2 et 15 caractères");
+const validateEmail = validateInput.bind(null, email, /^[\w-.]+@[\w-.]+\.[a-zA-Z]{2,25}$/, "Adresse email invalide.");
+
+function isFirstNameValidated() {
+  return validateFirstName();
+}
+
+function isLastNameValidated() {
+  return validateLastName();
+}
+
+function isEmailValidated() {
+  return validateEmail();
+}
+
+
+function isBirthDateValidated(){
   const today = new Date();
     const birthDate = new Date(birthDateInput.value);
     const age = today.getFullYear() - birthDate.getFullYear();
@@ -115,133 +89,42 @@ function validateBirthDate(){
   } else {
       errorDisplay(birthDateInput, "")
       birthDateInput.parentElement.removeAttribute('data-error-visible', 'true');
-      return birthDateInput.value
+      return true
     }
   }
-//to be used without errorDisplay function
-  // function validateBirthDate() {
-  //   // Récupère la date du jour
-  //   const today = new Date();
-  //   // Convertit la valeur du champ en objet Date
-  //   const birthDate = new Date(birthDateInput.value);
-  //   // Calcule l'âge en se basant sur les années
-  //   const age = today.getFullYear() - birthDate.getFullYear();
 
-  //   // Vérifie si l'âge est inférieur à 12 ans
-  //   if (birthDateInput.value === '' || age < 12) {
-  //     // Ajoute des attributs data pour indiquer une erreur
-  //     birthDateInput.parentElement.setAttribute('data-error', "Veuillez entrer un age d'\au moins douze ans.");
-  //     birthDateInput.parentElement.setAttribute('data-error-visible', 'true');
-  //     // Renvoie faux si la validation échoue
-  //     return false;
-  //   } else {
-  //     // Supprime les attributs data d'erreur si la validation réussit
-  //     birthDateInput.parentElement.removeAttribute('data-error');
-  //     birthDateInput.parentElement.removeAttribute('data-error-visible');
-  //     // Renvoie la valeur de la date de naissance si la validation réussit
-  //     return birthDateInput.value;
-  //   }
-  // }
-
-function verifyNumberTournament() {
-const quantityTournament = document.getElementById('quantity');
-const num = parseInt(quantityTournament.value);
+function isNumberTournamentValidated() {
+  const num = parseInt(quantityTournament.value);
   if (isNaN(num)) {
     errorDisplay(quantityTournament, "Veuillez entrer un nombre de tournois.");
     return false;
   }else
   errorDisplay(quantityTournament, "")
   quantityTournament.parentElement.removeAttribute('data-error-visible', 'true');
-  return quantityTournament.value
+  return true
 }
 
-// to be used without errorDisplay function
-// function verifyNumberTournament() {
-//   // Récupère l'élément du formulaire pour le nombre de tournois
-//   const quantityTournament = document.getElementById('quantity');
-//   // Expression régulière pour vérifier le format du nombre
-//   const numberRegex = /^\d+$/;
 
-//   // Vérifie si la valeur du champ correspond à l'expression régulière (nombre entier positif)
-//   if (!numberRegex.test(quantityTournament.value)) {
-//     // Ajoute des attributs data pour indiquer une erreur
-//     quantityTournament.parentElement.setAttribute('data-error', 'Veuillez entrer un nombre de tournoi supérieur ou égal à zéro.');
-//     quantityTournament.parentElement.setAttribute('data-error-visible', 'true');
-//     // Renvoie faux si la validation échoue
-//     return false;
-//   } else {
-//     // Convertit la valeur du champ en nombre entier
-//     const num = parseInt(quantityTournament.value);
-//     // Supprime les attributs data d'erreur si la validation réussit
-//     quantityTournament.parentElement.removeAttribute('data-error');
-//     quantityTournament.parentElement.removeAttribute('data-error-visible');
-//     // Renvoie la valeur du nombre de tournois si la validation réussit
-//     return num;
-//   }
-// }
-
-function verifyRadio() {
+function isLocationValidated() {
   isRadioSelected = false; 
   for (const radioButton of radioButtons) {
     radioButton.addEventListener('click', () => {
       if (radioButton.checked) {
         errorDisplay(radioButtons[0], ""); 
         isRadioSelected = true; 
-        return radioButton.value; 
+        return true
       }
     });
     if (radioButton.checked) {
       isRadioSelected = true; 
-      return true; 
+      return true
     }
   }
   errorDisplay(radioButtons[0], "Veuillez sélectionner un emplacement"); 
   return false;
 }
 
-//to be used without errorDisplay function
-// function verifyRadio() {
-//   // Récupère le groupe d'éléments radio
-//   const radioButtons = document.querySelectorAll('input[type="radio"][name="location"]'); // Assurez-vous que le sélecteur correspond à votre groupe d'éléments radio
-
-//   // Initialisation des attributs data pour la gestion des erreurs
-//   radioButtons[0].parentElement.setAttribute('data-error', '');
-//   radioButtons[0].parentElement.setAttribute('data-error-visible', 'false');
-
-//   // Parcourt tous les éléments radio du groupe
-//   for (const radioButton of radioButtons) {
-//     // Ajoute un écouteur d'événement 'click' à chaque bouton radio
-//     radioButton.addEventListener('click', () => {
-//       // Vérifie si le bouton radio est coché
-//       if (radioButton.checked) {
-//         // Supprime les attributs data d'erreur
-//         radioButtons[0].parentElement.removeAttribute('data-error');
-//         radioButtons[0].parentElement.removeAttribute('data-error-visible');
-    
-//         // Indique qu'un bouton radio est sélectionné
-//         isRadioSelected = true;
-    
-//         // Renvoie la valeur du bouton radio coché
-//         return radioButton.value;
-//       }
-//     });
-//   }
-
-//   // Vérifie si aucun bouton radio n'est coché après la boucle
-//   if (!isRadioSelected) {
-//     // Ajoute des attributs data pour indiquer une erreur
-//     radioButtons[0].parentElement.setAttribute('data-error', 'Veuillez sélectionner un emplacement');
-//     radioButtons[0].parentElement.setAttribute('data-error-visible', 'true');
-
-//     // Renvoie faux si aucun bouton radio n'est coché
-//     return false;
-//   } else {
-//     // Renvoie vrai si un bouton radio est coché
-//     return true;
-//   }
-// }
-
-function boxIsValid() {
+function isCguValidated() {
   const checkbox1 = document.getElementById('checkbox1');
   checkbox1.addEventListener('click', () => {
     if (checkbox1.checked) {
@@ -255,56 +138,30 @@ function boxIsValid() {
   return true;
 }
 
-//to be used without errorDisplay function
-// // Fonction pour vérifier la case à cocher des conditions d'utilisation
-// function boxIsValid() {
-//   // Récupère la case à cocher pour les conditions d'utilisation
-//   const checkbox1 = document.getElementById('checkbox1');
-
-//   // Ajoute un écouteur d'événement 'click' à la case à cocher
-//   checkbox1.addEventListener('click', () => {
-//     // Supprime l'erreur si la case est cochée
-//     if (checkbox1.checked) {
-//       checkbox1.parentElement.removeAttribute('data-error', 'Veuillez sélectionner un emplacement');
-//       checkbox1.parentElement.removeAttribute('data-error-visible', 'true');
-//     }
-//   });
-
-//   // Vérifie si la case est cochée
-//   if (!checkbox1.checked) {
-//     // Affiche une erreur si la case n'est pas cochée
-//     checkbox1.parentElement.setAttribute('data-error', 'Veuillez sélectionner un emplacement');
-//     checkbox1.parentElement.setAttribute('data-error-visible', 'true');
-//     return false;
-//   }
-//   // Renvoie vrai si la case est cochée
-//   return true;
-// }
-
-document.getElementById('first').addEventListener('blur', validateFirstName);
-document.getElementById('last').addEventListener('blur',validateLastName)
-document.getElementById('email').addEventListener('blur',validateEmail)
-document.getElementById('birthdate').addEventListener('blur',validateBirthDate)
-document.getElementById('quantity').addEventListener('blur',verifyNumberTournament)
+document.getElementById('first').addEventListener('blur', isFirstNameValidated);
+document.getElementById('last').addEventListener('blur',isLastNameValidated)
+document.getElementById('email').addEventListener('blur',isEmailValidated)
+document.getElementById('birthdate').addEventListener('blur',isBirthDateValidated)
+document.getElementById('quantity').addEventListener('blur',isNumberTournamentValidated)
 
 document.querySelector('form').addEventListener('submit',validateForm)
 
 function validateForm(e) {
-  let firstNameValid = validateFirstName();
-  let lastNameValid = validateLastName();
-  let emailValid = validateEmail()
-  let birthDateValid = validateBirthDate()
-  let quantityTournamentValid = verifyNumberTournament()
-  let radioButtonSelected = verifyRadio()
-  let boxIsValidated = boxIsValid()
+  const isFirstNameValid = isFirstNameValidated();
+  const isLastNameValid = isLastNameValidated();
+  const isEmailValid = isEmailValidated()
+  const isBirthDateValid = isBirthDateValidated()
+  const isQuantityTournamentValid = isNumberTournamentValidated()
+  const isLocationSelected = isLocationValidated()
+  const isCguSelected = isCguValidated()
   if (
-    !validateFirstName() 
-||  !validateLastName()
-||  !validateEmail()
-||  !validateBirthDate()
-||  !verifyNumberTournament()
-||  !verifyRadio()
-||  !boxIsValid()
+    !isFirstNameValid
+||  !isLastNameValid
+||  !isEmailValid
+||  !isBirthDateValid
+||  !isQuantityTournamentValid
+||  !isLocationSelected
+||  !isCguSelected
   ) {
     e.preventDefault()
     return false;
@@ -316,14 +173,14 @@ function validateForm(e) {
       lastName: lastNameInput.value,
       email: email.value,
       birthDate: birthDateInput.value,
-      quantityTournament: verifyNumberTournament(),
+      tournament: geNumberOfTournaments(),
       location: getSelectedRadioValue(radioButtons)
     };
     console.log(formData);
 
 localStorage.setItem('formData', JSON.stringify(formData));
 
-const formFields = document.querySelectorAll('.formData input');
+const formFields = document.querySelectorAll('.formData input'); // Empêche les checkbox de rester cochés après soumission du formulaire
 for (const field of formFields) {
   field.value = '';
   if (field.type === 'checkbox' || field.type === 'radio') {
@@ -334,12 +191,21 @@ for (const field of formFields) {
   return true;
 }
 
-function displayModalEnd(){
+function displayModalEnd(){      // Affichage de la modale de remerciement
   modalEnd.style.display = "block";
   modalbg.style.display = "none"
 }
 
-function getSelectedRadioValue(radioButtons) {
+function geNumberOfTournaments(){      ////tranforme la string renvoyée par l'input pour en faire un chiffre récupéré dans l'objet
+const strValue = quantityTournament.value
+if (!isNaN(strValue)) {
+  const numValue = parseInt(strValue);
+  return numValue
+}
+  return ""
+}
+
+function getSelectedRadioValue(radioButtons) {   //renvoit la valeur de la checkboxe type radio pour qu'elle s'affiche dans la console
   for (const radioButton of radioButtons) {
     if (radioButton.checked) {
       return radioButton.value;
@@ -347,3 +213,40 @@ function getSelectedRadioValue(radioButtons) {
   }
   return ""; 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function isInputsValidated(inputElement, regex, errorMessage) { 
+//   if (!regex.test(inputElement.value)) {
+//     errorDisplay(inputElement, errorMessage)
+//     return false;
+//   } else {
+//     errorDisplay(inputElement, "")
+//     return true;
+//   }
+// }
+
+// function isFirstNameValidated() {
+//   const firstNameRegex = /^[a-zA-Z0-9-]{2,15}$/;
+//   return isInputsValidated(firstNameInput, firstNameRegex, "L'adresse mail n'est pas valide.");
+// }
+
+// function isLastNameValidated() {
+//   const lastNameRegex = /^[a-zA-Z0-9-]{2,15}$/;
+//   return isInputsValidated(lastNameInput, lastNameRegex, "L'adresse mail n'est pas valide.");
+// }
+
+// function isEmailValidated() {
+//   const emailRegex = /^[\w-.]+@[\w-.]+\.[a-zA-Z]{2,}$/;
+//     return isInputsValidated(email, emailRegex, "Adresse email invalide.");
+// }
