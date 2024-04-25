@@ -11,6 +11,17 @@ const birthDateInput = document.getElementById('birthdate'); // Sélection de l'
 const radioButtons = document.querySelectorAll('input[type="radio"][name="location"]'); // Sélection de tous les boutons radio avec le nom "location"
 let isRadioSelected = false; // Variable pour suivre la sélection d'un bouton radio (initialisée à faux)
 const quantityTournament = document.getElementById('quantity');
+let firstNameRegex = /^[a-zA-Z0-9-]{2,15}$/;
+let lastNameRegex = /^[a-zA-Z0-9-]{2,15}$/;
+let emailRegex = /^[\w-.]+@[\w-.]+\.[a-zA-Z]{2,25}$/;
+let firstNameErrorMessage ="Veuillez entrer un prénom compris entre 2 et 15 caractères"
+let lastNameErrorMessage = "Veuillez entrer un nom compris entre 2 et 15 caractères"
+let emailErrorMessage = "Adresse email invalide."
+let birthDateErrorMessage = "Veuillez entrer un age supérieur ou égal à douze ans."
+let numberTournamentErrorMessage = "Veuillez entrer un nombre de tournois."
+let locationErrorMessage = "Veuillez sélectionner un emplacement"
+let cguErrorMessage = "Veuillez accepter nos conditions d'utilisation."
+
 
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -51,7 +62,7 @@ function errorDisplay(inputField, errorMessage) {
   }
 }
 
-function validateInput(inputElement, regex, errorMessage) {
+function validateInputs(inputElement, regex, errorMessage) {
   if (!regex.test(inputElement.value)) {
     errorDisplay(inputElement, errorMessage);
     return false;
@@ -60,31 +71,13 @@ function validateInput(inputElement, regex, errorMessage) {
   return true;
 }
 
-
-const validateFirstName = validateInput.bind(null, firstNameInput, /^[a-zA-Z0-9-]{2,15}$/, "Veuillez entrer un prénom compris entre 2 et 15 caractères");
-const validateLastName = validateInput.bind(null, lastNameInput, /^[a-zA-Z0-9-]{2,15}$/, "Veuillez entrer un nom compris entre 2 et 15 caractères");
-const validateEmail = validateInput.bind(null, email, /^[\w-.]+@[\w-.]+\.[a-zA-Z]{2,25}$/, "Adresse email invalide.");
-
-function isFirstNameValidated() {
-  return validateFirstName();
-}
-
-function isLastNameValidated() {
-  return validateLastName();
-}
-
-function isEmailValidated() {
-  return validateEmail();
-}
-
-
 function isBirthDateValidated(){
   const today = new Date();
     const birthDate = new Date(birthDateInput.value);
     const age = today.getFullYear() - birthDate.getFullYear();
 
   if (birthDateInput.value === '' || age < 12) {
-    errorDisplay(birthDateInput, "Veuillez entrer un age supérieur ou égal à douze ans."); 
+    errorDisplay(birthDateInput, birthDateErrorMessage); 
     return false;
   } else {
       errorDisplay(birthDateInput, "")
@@ -96,7 +89,7 @@ function isBirthDateValidated(){
 function isNumberTournamentValidated() {
   const num = parseInt(quantityTournament.value);
   if (isNaN(num)) {
-    errorDisplay(quantityTournament, "Veuillez entrer un nombre de tournois.");
+    errorDisplay(quantityTournament, numberTournamentErrorMessage);
     return false;
   }else
   errorDisplay(quantityTournament, "")
@@ -120,7 +113,7 @@ function isLocationValidated() {
       return true
     }
   }
-  errorDisplay(radioButtons[0], "Veuillez sélectionner un emplacement"); 
+  errorDisplay(radioButtons[0], locationErrorMessage); 
   return false;
 }
 
@@ -132,24 +125,32 @@ function isCguValidated() {
     }
   });
   if (!checkbox1.checked) {
-    errorDisplay(checkbox1, "Veuillez accepter nos conditions d'utilisation.");
+    errorDisplay(checkbox1, cguErrorMessage);
     return false;
   }
   return true;
 }
 
-document.getElementById('first').addEventListener('blur', isFirstNameValidated);
-document.getElementById('last').addEventListener('blur',isLastNameValidated)
-document.getElementById('email').addEventListener('blur',isEmailValidated)
+firstNameInput.addEventListener('blur', () => {
+  validateInputs(firstNameInput, firstNameRegex, firstNameErrorMessage);
+});
+
+lastNameInput.addEventListener('blur', () => {
+  validateInputs(lastNameInput, lastNameRegex, lastNameErrorMessage);
+});
+
+email.addEventListener('blur', () => {
+  validateInputs(email, emailRegex, emailErrorMessage);
+});
 document.getElementById('birthdate').addEventListener('blur',isBirthDateValidated)
 document.getElementById('quantity').addEventListener('blur',isNumberTournamentValidated)
 
 document.querySelector('form').addEventListener('submit',validateForm)
 
 function validateForm(e) {
-  const isFirstNameValid = isFirstNameValidated();
-  const isLastNameValid = isLastNameValidated();
-  const isEmailValid = isEmailValidated()
+  const isFirstNameValid = validateInputs(firstNameInput, firstNameRegex, firstNameErrorMessage);
+  const isLastNameValid = validateInputs(lastNameInput, lastNameRegex, lastNameErrorMessage);
+  const isEmailValid = validateInputs(email, emailRegex, emailErrorMessage);
   const isBirthDateValid = isBirthDateValidated()
   const isQuantityTournamentValid = isNumberTournamentValidated()
   const isLocationSelected = isLocationValidated()
@@ -220,11 +221,21 @@ function getSelectedRadioValue(radioButtons) {   //renvoit la valeur de la check
 
 
 
+// const validateFirstName = validateInput.bind(null, firstNameInput, /^[a-zA-Z0-9-]{2,15}$/, "Veuillez entrer un prénom compris entre 2 et 15 caractères");
+// const validateLastName = validateInput.bind(null, lastNameInput, /^[a-zA-Z0-9-]{2,15}$/, "Veuillez entrer un nom compris entre 2 et 15 caractères");
+// const validateEmail = validateInput.bind(null, email, /^[\w-.]+@[\w-.]+\.[a-zA-Z]{2,25}$/, "Adresse email invalide.");
 
+// function isFirstNameValidated() {
+//   return validateFirstName();
+// }
 
+// function isLastNameValidated() {
+//   return validateLastName();
+// }
 
-
-
+// function isEmailValidated() {
+//   return validateEmail();
+// }
 
 // function isInputsValidated(inputElement, regex, errorMessage) { 
 //   if (!regex.test(inputElement.value)) {
