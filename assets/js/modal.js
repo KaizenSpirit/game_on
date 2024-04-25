@@ -1,7 +1,7 @@
 // DOM Elements
 const modalBtn = document.querySelectorAll(".modal-btn"); 
 const modalbg = document.querySelector(".bground"); 
-const formData = document.querySelectorAll(".formData"); 
+// const formData = document.querySelectorAll(".formData"); 
 const modalEnd = document.querySelector('.bg-modal-end'); 
 
 const firstNameInput = document.getElementById('first'); 
@@ -71,7 +71,7 @@ function isInputsValidated(inputElement, regex, errorMessage) {
 }
 
 function isBirthDateValidated(){
-  const today = new Date();
+    const today = new Date();
     const birthDate = new Date(birthDateInput.value);
     const age = today.getFullYear() - birthDate.getFullYear();
 
