@@ -1,15 +1,15 @@
 // DOM Elements
-const modalBtn = document.querySelectorAll(".modal-btn"); // Sélection des deux boutons de la page avec une classe "modal-btn".
-const modalbg = document.querySelector(".bground"); // Sélection de l'élément avec la classe "bground dans lequel se trouve le formulaire"
-const formData = document.querySelectorAll(".formData"); // Sélection de tous les éléments avec la classe "formData où afficher les messages d'erreur"
-const modalEnd = document.querySelector('.bg-modal-end'); // Sélection de l'élément avec la classe "bg-modal-end pour afficher la modale de confirmation d'envoie"
+const modalBtn = document.querySelectorAll(".modal-btn"); 
+const modalbg = document.querySelector(".bground"); 
+const formData = document.querySelectorAll(".formData"); 
+const modalEnd = document.querySelector('.bg-modal-end'); 
 
-const firstNameInput = document.getElementById('first'); // Sélection de l'élément avec l'id "first" (champ Prénom)
-const lastNameInput = document.getElementById('last'); // Sélection de l'élément avec l'id "last" (champ Nom)
-const email = document.getElementById('email'); // Sélection de l'élément avec l'id "email" (champ E-mail)
-const birthDateInput = document.getElementById('birthdate'); // Sélection de l'élément avec l'id "birthdate" (champ Date de naissance)
-const radioButtons = document.querySelectorAll('input[type="radio"][name="location"]'); // Sélection de tous les boutons radio avec le nom "location"
-let isRadioSelected = false; // Variable pour suivre la sélection d'un bouton radio (initialisée à faux)
+const firstNameInput = document.getElementById('first'); 
+const lastNameInput = document.getElementById('last'); 
+const email = document.getElementById('email'); 
+const birthDateInput = document.getElementById('birthdate'); 
+const radioButtons = document.querySelectorAll('input[type="radio"][name="location"]'); 
+let isRadioSelected = false; 
 const quantityTournament = document.getElementById('quantity');
 let firstNameRegex = /^[a-zA-Z0-9-]{2,15}$/;
 let lastNameRegex = /^[a-zA-Z0-9-]{2,15}$/;
@@ -21,7 +21,6 @@ let birthDateErrorMessage = "Veuillez entrer un age supérieur ou égal à douze
 let numberTournamentErrorMessage = "Veuillez entrer un nombre de tournois."
 let locationErrorMessage = "Veuillez sélectionner un emplacement"
 let cguErrorMessage = "Veuillez accepter nos conditions d'utilisation."
-
 
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -62,7 +61,7 @@ function errorDisplay(inputField, errorMessage) {
   }
 }
 
-function validateInputs(inputElement, regex, errorMessage) {
+function isInputsValidated(inputElement, regex, errorMessage) {
   if (!regex.test(inputElement.value)) {
     errorDisplay(inputElement, errorMessage);
     return false;
@@ -96,7 +95,6 @@ function isNumberTournamentValidated() {
   quantityTournament.parentElement.removeAttribute('data-error-visible', 'true');
   return true
 }
-
 
 function isLocationValidated() {
   isRadioSelected = false; 
@@ -132,15 +130,15 @@ function isCguValidated() {
 }
 
 firstNameInput.addEventListener('blur', () => {
-  validateInputs(firstNameInput, firstNameRegex, firstNameErrorMessage);
+  isInputsValidated(firstNameInput, firstNameRegex, firstNameErrorMessage);
 });
 
 lastNameInput.addEventListener('blur', () => {
-  validateInputs(lastNameInput, lastNameRegex, lastNameErrorMessage);
+  isInputsValidated(lastNameInput, lastNameRegex, lastNameErrorMessage);
 });
 
 email.addEventListener('blur', () => {
-  validateInputs(email, emailRegex, emailErrorMessage);
+  isInputsValidated(email, emailRegex, emailErrorMessage);
 });
 document.getElementById('birthdate').addEventListener('blur',isBirthDateValidated)
 document.getElementById('quantity').addEventListener('blur',isNumberTournamentValidated)
@@ -148,9 +146,9 @@ document.getElementById('quantity').addEventListener('blur',isNumberTournamentVa
 document.querySelector('form').addEventListener('submit',validateForm)
 
 function validateForm(e) {
-  const isFirstNameValid = validateInputs(firstNameInput, firstNameRegex, firstNameErrorMessage);
-  const isLastNameValid = validateInputs(lastNameInput, lastNameRegex, lastNameErrorMessage);
-  const isEmailValid = validateInputs(email, emailRegex, emailErrorMessage);
+  const isFirstNameValid = isInputsValidated(firstNameInput, firstNameRegex, firstNameErrorMessage);
+  const isLastNameValid = isInputsValidated(lastNameInput, lastNameRegex, lastNameErrorMessage);
+  const isEmailValid = isInputsValidated(email, emailRegex, emailErrorMessage);
   const isBirthDateValid = isBirthDateValidated()
   const isQuantityTournamentValid = isNumberTournamentValidated()
   const isLocationSelected = isLocationValidated()

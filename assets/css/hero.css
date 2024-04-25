@@ -87,6 +87,7 @@ main {
 
 @media (max-width: 1240px) and (min-width: 800px) {
   .hero-section {
+    height: 69vh;
     width: 90vw;
   }
   .hero-content {
@@ -105,14 +106,19 @@ main {
     text-align: center;
   }
   .btn-signup {
-    margin: 20% auto
+    margin: 20px auto
+  }
+
+  .modal-btn{
+    margin: 100px 0 0 0;
+
   }
 
   .copyrights {
     color: #fe142f;
     padding: 0;
     font-size: 1rem;
-    margin: 20px 0 100px;
+    margin: 15px 0 40px;
     font-weight: bolder;
   }
   footer {
