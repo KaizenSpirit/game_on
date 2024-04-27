@@ -9,7 +9,7 @@ const lastNameInput = document.getElementById('last');
 const email = document.getElementById('email'); 
 const birthDateInput = document.getElementById('birthdate'); 
 const radioButtons = document.querySelectorAll('input[type="radio"][name="location"]'); 
-const quantityTournament = document.getElementById('quantity');
+const quantityTournament = document.getElementById('numberTournaments');
 const checkbox1 = document.getElementById('checkbox1')
 
 
@@ -106,6 +106,8 @@ function isNumberTournamentValidated() {
 
 function isLocationValidated() {
   let isRadioSelected = false; 
+  // for (let i = 0; i < radioButtons.length; i++) {
+  //   const radioButton = radioButtons[i];
   for (const radioButton of radioButtons) {
     radioButton.addEventListener('click', () => {   // Ecouteur d'événement qui joue le même que "blur" pour les autres fonctions
       if (radioButton.checked) { // Si un message d'erreur est déjà affiché sous les boutons après l'oublie de selection d'un bouton et soumission
@@ -148,7 +150,7 @@ email.addEventListener('blur', () => {
   isInputsValidated(email, emailRegex, emailErrorMessage);
 });
 document.getElementById('birthdate').addEventListener('blur',isBirthDateValidated)
-document.getElementById('quantity').addEventListener('blur',isNumberTournamentValidated)
+document.getElementById('numberTournaments').addEventListener('blur',isNumberTournamentValidated)
 
 document.querySelector('form').addEventListener('submit',validateForm)
 
