@@ -41,6 +41,7 @@ a::before {
 a#nav-details:hover::before {
   transform-origin: left;
   transform: scaleX(0.9);
+  width: 100%;
 }
 a#nav-about:hover::before {
   transform-origin: left;
@@ -55,13 +56,15 @@ a#nav-past-events:hover::before {
   transform: scaleX(0.85);
 }
 
-.topnav a:hover {
+.topnav a:hover,
+.topnav a.active,
+.topnav a:before.active {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
 }
 
-.topnav a.active {
+/* .topnav a.active {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
@@ -71,7 +74,7 @@ a#nav-past-events:hover::before {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
-}
+} */
 
 .topnav .icon {
   display: none;
